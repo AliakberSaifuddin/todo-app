@@ -57,7 +57,17 @@ export const postTodo = (task, status)=>(dispatch)=>{
 export const fetchTodos = () => (dispatch) => {
     dispatch(todosLoading(true));
 
-    return fetch(baseUrl + "todos/")
+    return fetch(baseUrl + "todos/",
+    {
+        method: "GET",
+        withCredentials: true,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Cache': 'no-cache'
+        },
+        credentials: 'same-origin'
+      })
     .then(response => {
         if(response.ok){
             return response;
@@ -90,7 +100,8 @@ export const removeTodo = (id) => (dispatch) => {
     return fetch(baseUrl + "todos/" + id, {
         method: "DELETE",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Accept': 'application/json'
         },
         credentials : "same-origin"
     })
@@ -112,7 +123,10 @@ export const removeTodo = (id) => (dispatch) => {
         throw errmess;
     })
     .then(response => response.json())
-    .then(response => dispatch(deleteTodo(response)))
+    .then(response => {
+                        console.log(response);
+                        dispatch(deleteTodo(response))
+                      })
     .catch((error)=>{ console.log("Delete Todo : ", error.message);
                       alert('Your Todo could not be Deleted\nError: '+error.message)
                     })
@@ -154,7 +168,7 @@ export const updateStatus = (id, status) => (dispatch) => {
 
 export const deleteTodo = (todo) => ({
     type: ActionTypes.DELETE_TODO,
-    todo: todo
+    payload: todo
 })
 
 

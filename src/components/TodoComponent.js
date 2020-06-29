@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 import { ListGroup, ListGroupItem, Button, Input } from 'reactstrap';
 import { fetchTodos, updateStatus, removeTodo, postTodo } from '../redux/ActionCreators';
+import { Switch, Route, Redirect, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
+import { isAuthenticated} from  '../shared/checkAuth'
 
 const mapStateToProps = (state) => {
     console.log(state)
@@ -31,7 +33,7 @@ function TodoList ({todo, handleStatus, removeTodo}){
                 <ListGroupItem>
                     <div className="row">
                         <div className="col-md-3 ml-auto text-right"><Button color="white" onClick={ ()=>{handleStatus(todo._id, !todo.status)} } ><span className="fa fa-square-o"></span></Button></div>
-                        <div className="col-md-4 o text-center"><h5 className="crossed-line">{todo.task}</h5></div>
+                        <div className="col-md-4 o text-center"><h5>{todo.task}</h5></div>
                         <div className="col-md-3 mr-auto"><Button color="white" onClick={ ()=>{removeTodo(todo._id)} } ><span className="fa fa-trash-o"></span></Button></div>
                     </div>   
                 </ListGroupItem>          
@@ -73,6 +75,10 @@ class Todo extends Component{
     }
 
     render(){
+
+        if(!isAuthenticated()){
+            return <Redirect to="/login" />
+        }
         console.log("in Component");
         console.log(this.props);
         if(this.props.Todos.isLoading){
@@ -95,7 +101,7 @@ class Todo extends Component{
                 return <TodoList todo={todo} handleStatus={this.handleStatus} removeTodo={this.props.removeTodo} key={idx} />
             });
             return (
-                <div>
+                <div class="container">
                     <div className="row input-handler">
                         <div className="col-md-1 ml-auto text-right"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
                         <div className="col-md-4 mr-auto">
