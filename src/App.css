@@ -1,0 +1,11 @@
+.crossed-line {
+  text-decoration: line-through;
+}
+
+.input-handler{
+  padding: 10px 0px;
+}
+
+.input-handler i{
+  font-size: 35px;
+}
