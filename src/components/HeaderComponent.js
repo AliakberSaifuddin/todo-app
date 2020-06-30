@@ -86,6 +86,11 @@ class Header extends Component{
                                     <Nav className="ml-auto" navbar>    
                                         <NavItem>
                                             <NavLink className="nav-link"  to="" >
+                                                <span className="fa fa-user fa-lg"></span>Hey! { JSON.parse(localStorage.getItem("user")).name }
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink className="nav-link"  to="logout" >
                                                 <span className="fa fa-info fa-lg"></span> LogOut
                                             </NavLink>
                                         </NavItem>

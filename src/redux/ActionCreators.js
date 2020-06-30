@@ -19,7 +19,8 @@ export const updateTodo = (todo) => ({
 export const postTodo = (task, status)=>(dispatch)=>{
     const newTodo = {
         task: task,
-        status: status
+        status: status,
+        user_id: JSON.parse(localStorage.getItem("user"))._id
     }
     
     return fetch(baseUrl + "todos", {
@@ -57,7 +58,7 @@ export const postTodo = (task, status)=>(dispatch)=>{
 export const fetchTodos = () => (dispatch) => {
     dispatch(todosLoading(true));
 
-    return fetch(baseUrl + "todos/",
+    return fetch(baseUrl + "todos/" + JSON.parse(localStorage.getItem("user"))._id,
     {
         method: "GET",
         withCredentials: true,
@@ -66,9 +67,11 @@ export const fetchTodos = () => (dispatch) => {
           'Content-Type': 'application/json',
           'Cache': 'no-cache'
         },
-        credentials: 'same-origin'
+        credentials: "same-origin"  
       })
     .then(response => {
+        console.log("response");
+        console.log(response)
         if(response.ok){
             return response;
         }

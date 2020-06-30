@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Switch, Route, Redirect, withRouter} from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 import { baseUrl } from '../shared/baseUrl';
 import { isAuthenticated} from  '../shared/checkAuth'
 
@@ -29,7 +29,7 @@ class Login extends Component{
         event.preventDefault();
         console.log(this.state)
         console.log("current state is: "+JSON.stringify(this.state));
-        alert("current state is: "+JSON.stringify(this.state));
+    //    alert("current state is: "+JSON.stringify(this.state));
         // event.preventDefault();
         const _this = this;
 
@@ -46,7 +46,7 @@ class Login extends Component{
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Cache': 'no-cache'
+                    'Cache': 'no-cache',
                 }
             })
             .then(response => { 
@@ -68,6 +68,7 @@ class Login extends Component{
             })
             .then(response => response.json())
             .then((response) => { localStorage.setItem("loggedIn", "true");
+                                  localStorage.setItem("user", JSON.stringify(response));
                                     _this.setState({error : ""})
                                  })
             .catch((error)=>{ console.log("Post Todo : ", error.message);
@@ -81,20 +82,27 @@ class Login extends Component{
             return <Redirect to="/todos" />
         }
         return(
-            <Form onSubmit={this.handleSubmit}>
-                <h4 class="alert alert-danger">{this.state.error}</h4>
-                <FormGroup>
-                    <Label for="exampleEmail">Email</Label>
-                    <Input type="email" name="email" value={this.state.email} onChange={this.handleInputChange} placeholder="email" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="examplePassword">Password</Label>
-                    <Input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} placeholder="password" />
-                </FormGroup>
-                <FormGroup check row>
-                    <Button>Submit</Button>
-                </FormGroup>
-            </Form>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6 ml-auto mr-auto">
+                        <Form onSubmit={this.handleSubmit}>
+                            <h4>LogIn</h4>
+                            {this.state.error ? <h4 class="alert alert-danger">{this.state.error}</h4> : <div></div>}
+                            <FormGroup>
+                                <Label for="exampleEmail">Email</Label>
+                                <Input type="email" name="email" value={this.state.email} onChange={this.handleInputChange} placeholder="email" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="examplePassword">Password</Label>
+                                <Input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} placeholder="password" />
+                            </FormGroup>
+                            <FormGroup>
+                                <Button color="success">Submit</Button>
+                            </FormGroup>
+                        </Form>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

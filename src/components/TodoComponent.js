@@ -49,7 +49,7 @@ class Todo extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.props.fetchTodos();
     }
 
@@ -101,16 +101,18 @@ class Todo extends Component{
                 return <TodoList todo={todo} handleStatus={this.handleStatus} removeTodo={this.props.removeTodo} key={idx} />
             });
             return (
-                <div class="container">
-                    <div className="row input-handler">
-                        <div className="col-md-1 ml-auto text-right"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
-                        <div className="col-md-4 mr-auto">
-                            <Input type="text" placeholder="TODO" value={this.state.task} name="task"
-                                onKeyUp={this.handleInputKey}
-                                onChange={this.handleInputChange} />
-                        </div>
-                    </div>
+                <div class="container">                 
                     <ListGroup>
+                        <ListGroupItem>
+                        <div className="row input-handler">
+                            <div className="col-md-1 ml-auto text-right"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
+                            <div className="col-md-4 mr-auto">
+                                <Input type="text" placeholder="TODO" value={this.state.task} name="task"
+                                    onKeyUp={this.handleInputKey}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                        </div>
+                        </ListGroupItem>
                         {todoList}
                     </ListGroup>
                 </div>                
