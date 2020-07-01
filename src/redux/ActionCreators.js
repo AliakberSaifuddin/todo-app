@@ -23,7 +23,7 @@ export const postTodo = (task, status)=>(dispatch)=>{
         user_id: JSON.parse(localStorage.getItem("user"))._id
     }
     
-    return fetch(baseUrl + "todos", {
+    return fetch("/api/todos", {
         method: "POST",
         body: JSON.stringify(newTodo),
         headers: {
@@ -58,7 +58,7 @@ export const postTodo = (task, status)=>(dispatch)=>{
 export const fetchTodos = () => (dispatch) => {
     dispatch(todosLoading(true));
 
-    return fetch(baseUrl + "todos/" + JSON.parse(localStorage.getItem("user"))._id,
+    return fetch("/api/todos/" + JSON.parse(localStorage.getItem("user"))._id,
     {
         method: "GET",
         withCredentials: true,
@@ -100,7 +100,7 @@ export const fetchTodos = () => (dispatch) => {
 
 export const removeTodo = (id) => (dispatch) => {
 
-    return fetch(baseUrl + "todos/" + id, {
+    return fetch("/api/todos/" + id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -137,7 +137,7 @@ export const removeTodo = (id) => (dispatch) => {
 
 export const updateStatus = (id, status) => (dispatch) => {
 
-    return fetch(baseUrl + "todos/" + id, {
+    return fetch("/api/todos/" + id, {
         method: "PUT",
         body: JSON.stringify({status: status}),
         headers: {

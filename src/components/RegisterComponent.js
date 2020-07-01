@@ -41,7 +41,7 @@ class Register extends Component{
                 password: this.state.password
             }
             
-            return fetch(baseUrl + "users/register", {
+            return fetch("/api/users/register", {
                 method: "POST",
                 body: JSON.stringify(Register),
                 headers: {
@@ -88,7 +88,7 @@ class Register extends Component{
                         <Form onSubmit={this.handleSubmit}>
                             {this.state.error ? <h4 class="alert alert-danger">{this.state.error}</h4> : <div></div>}
                             <FormGroup>
-                                <Label for="name">Email</Label>
+                                <Label for="name">Name</Label>
                                 <Input type="text" name="name" id="name" value={this.state.name} onChange={this.handleInputChange} placeholder="name" />
                             </FormGroup>
                             <FormGroup>

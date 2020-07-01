@@ -38,7 +38,7 @@ class Login extends Component{
                 password: this.state.password
             }
             
-            return fetch(baseUrl + "users/login", {
+            return fetch("/api/users/login", {
                 method: "POST",
                 body: JSON.stringify(login),
                 withCredentials: true,                    
